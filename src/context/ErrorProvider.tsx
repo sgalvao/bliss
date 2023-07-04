@@ -21,7 +21,7 @@ export const ErrorProvider = ({ children }: Props) => {
     };
 
     handleCheck();
-  });
+  }, []);
 
   useEffect(() => {
     const handleOnlineStatusChange = () => {

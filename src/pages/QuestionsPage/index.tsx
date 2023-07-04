@@ -1,14 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import * as S from "./styles";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { GetQuestions } from "../../services/getQuestions";
 import { QuestionsType } from "../../types/api";
 import { ShareModal } from "@/components/ShareModal";
 import InfinityScroll from "@/components/InfinityScroll";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
-import { checkApiHealth } from "@/services/checkApiHealth";
-import { ErrorContext } from "@/context/errorProvider";
 import { ErrorModal } from "@/components/ErrorModal";
 
 const QuestionsPage = () => {
@@ -25,16 +23,6 @@ const QuestionsPage = () => {
     const newData = await loadMore(filter as string, data.length);
     setData((current) => [...current, ...newData]);
   };
-
-  const { setIsError } = useContext(ErrorContext);
-
-  useEffect(() => {
-    const handleCheck = async () => {
-      setIsError(await checkApiHealth());
-    };
-
-    handleCheck();
-  });
 
   useEffect(() => {
     if (!filter) {

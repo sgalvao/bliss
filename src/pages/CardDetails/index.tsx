@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./styles";
 import { useNavigate, useParams } from "react-router-dom";
 import { GetQuestionById } from "@/services/getQuestionById";
@@ -8,9 +8,7 @@ import { QuestionProps } from "@/types/api";
 import { CreateVote } from "@/services/createVote";
 import { ShareModal } from "@/components/ShareModal";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import { checkApiHealth } from "@/services/checkApiHealth";
 import { ErrorModal } from "@/components/ErrorModal";
-import { ErrorContext } from "@/context/errorProvider";
 
 const CardDetails = () => {
   const { questionId } = useParams();
@@ -18,15 +16,6 @@ const CardDetails = () => {
   const [data, setData] = useState<QuestionProps>({} as QuestionProps);
   const [isVoted, setIsVoted] = useState<number | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { setIsError } = useContext(ErrorContext);
-
-  useEffect(() => {
-    const handleCheck = async () => {
-      setIsError(await checkApiHealth());
-    };
-
-    handleCheck();
-  });
 
   const handleGetQuestionData = async () => {
     try {
